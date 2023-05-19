@@ -104,6 +104,10 @@ class Store {
     })
   }
 
+  /**
+   * Удаление записи из корзины
+   * @param {Object} item 
+   */
   deleteItemFromBasket(item) {
     this.setState({
       ...this.state,
