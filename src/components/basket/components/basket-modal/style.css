@@ -1,0 +1,23 @@
+.BasketModal-indent {
+  height: 63px;
+  border-bottom: 1px dashed #ccc;  
+}
+
+.BasketModal-indent:last-child {
+  border-bottom: none;  
+}
+
+.BasketModal-summary {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 100px 20px 10px;;
+}
+
+.BasketModal-summary__text {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 0 10px;
+  min-width: 80px;
+  text-align: end;
+  white-space: nowrap;
+}

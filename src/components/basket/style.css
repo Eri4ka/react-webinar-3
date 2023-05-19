@@ -1,0 +1,16 @@
+.Basket {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom: 1px dashed #ccc;
+}
+
+.Basket-text {
+  font-size: 18px;
+}
+
+.Basket-count {
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 15px;
+}

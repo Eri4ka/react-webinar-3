@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react';
 import List from "./components/list";
-import Controls from "./components/controls";
 import Head from "./components/head";
-import PageLayout from "./components/page-layout";
+import PageLayout from "./components/layout/page-layout";
+import Basket from "./components/basket";
 
 /**
  * Приложение
@@ -11,29 +11,27 @@ import PageLayout from "./components/page-layout";
  */
 function App({store}) {
 
-  const list = store.getState().list;
+  const { basket, list } = store.getState();
 
   const callbacks = {
-    onDeleteItem: useCallback((code) => {
-      store.deleteItem(code);
+    onDeleteItemFromBasket: useCallback((item) => {
+      store.deleteItemFromBasket(item);
     }, [store]),
 
-    onSelectItem: useCallback((code) => {
-      store.selectItem(code);
-    }, [store]),
-
-    onAddItem: useCallback(() => {
-      store.addItem();
+    onAddToBasketItem: useCallback((item) => {
+      store.addToBasketItem(item) 
     }, [store])
   }
 
   return (
     <PageLayout>
       <Head title='Приложение на чистом JS'/>
-      <Controls onAdd={callbacks.onAddItem}/>
-      <List list={list}
-            onDeleteItem={callbacks.onDeleteItem}
-            onSelectItem={callbacks.onSelectItem}/>
+      <Basket basket={basket} onDeleteItem={callbacks.onDeleteItemFromBasket}/>
+      <List 
+        list={list}
+        onItemClick={callbacks.onAddToBasketItem}
+        buttonItemTitle='Добавить'
+      />
     </PageLayout>
   );
 }

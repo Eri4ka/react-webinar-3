@@ -83,6 +83,33 @@ class Store {
       })
     })
   }
+
+  /**
+   * Добавление записи в корзину
+   * @param {Object} item 
+   */
+  addToBasketItem(item) {
+    let basketCopy = [...this.state.basket];
+    const index = this.state.basket.findIndex((element) => item.code === element.code);
+
+    if (index !== -1) {
+      basketCopy[index].count++;
+    } else {
+      basketCopy = [...basketCopy, { ...item, count: 1 }];
+    }
+
+    this.setState({
+      ...this.state,
+      basket: basketCopy
+    })
+  }
+
+  deleteItemFromBasket(item) {
+    this.setState({
+      ...this.state,
+      basket: this.state.basket.filter(element => element.code !== item.code)
+    })
+  }
 }
 
 export default Store;
