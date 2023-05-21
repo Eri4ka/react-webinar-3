@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
-import Modal from '../../../modal';
-import List from '../../../list';
+import Modal from '../modal';
+import List from '../list';
+import BasketItem from '../basket-item';
 
 import './style.css';
-
 
 function BasketModal({ basket, sum, onClose, onDelete }) {
   const cn = bem('BasketModal');
@@ -13,7 +13,7 @@ function BasketModal({ basket, sum, onClose, onDelete }) {
   return (
     <Modal title='Корзина' onClose={onClose}>
       <div className={cn('indent')} />
-      <List list={basket} buttonItemTitle='Удалить' onItemClick={onDelete} />
+      <List list={basket} buttonItemTitle='Удалить' onItemClick={onDelete} ItemComponent={BasketItem}/>
       <div className={cn('summary')}>
         <div className={cn('summary__text')}>Итого</div>
         <div className={cn('summary__text')}>{sum} ₽</div>

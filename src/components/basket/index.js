@@ -1,52 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
-import BasketModal from './components/basket-modal';
 import Controls from "../controls";
-import BasketCount from './components/basket-count';
+import BasketCount from '../basket-count';
 import './style.css';
 
 
-function Basket({ basket, onDeleteItem }) {
+function Basket({ count, sum, onToggleModal }) {
   const cn = bem('Basket');
 
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-
-  const sumInBasket = basket?.reduce((acc, i) => acc + i.price * i.count, 0);
-
-  const callbacks = {
-    onToggleModal: () => {
-      setIsModalOpen((current) => !current);
-    }
-  };
-
   return (
-    <>
     <div className={cn()}>
       <div className={cn('text')}>В корзине:</div>
-      <BasketCount count={basket.length} sum={sumInBasket} />
-      <Controls onClick={callbacks.onToggleModal} title='Перейти' />
+      <BasketCount count={count} sum={sum} />
+      <Controls onClick={onToggleModal} title='Перейти' />
     </div>
-    {isModalOpen && (
-      <BasketModal 
-        basket={basket} 
-        sum={sumInBasket} 
-        onClose={callbacks.onToggleModal} 
-        onDelete={onDeleteItem}
-      />
-    )}
-    </>
   )
 }
 
 Basket.propTypes = {
-  basket: PropTypes.arrayOf(PropTypes.shape({
-    code: PropTypes.number,
-    title: PropTypes.string,
-    price: PropTypes.number,
-    count: PropTypes.number
-  })).isRequired,
-  onDeleteItem: PropTypes.func
+  count: PropTypes.number.isRequired,
+  sum: PropTypes.number.isRequired,
+  onToggleModal: PropTypes.func
 };
 
 export default Basket;

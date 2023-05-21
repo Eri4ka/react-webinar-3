@@ -85,6 +85,15 @@ class Store {
   }
 
   /**
+   * Расчет суммы записей в корзине
+   * @param {Array} list 
+   * @returns {Array}
+   */
+  calcSumInBasket(list) {
+    return list?.reduce((acc, i) => acc + i.price * i.count, 0);
+  }
+
+  /**
    * Добавление записи в корзину
    * @param {Object} item 
    */
@@ -100,8 +109,10 @@ class Store {
 
     this.setState({
       ...this.state,
-      basket: basketCopy
-    })
+      basket: basketCopy,
+      basketSum: this.calcSumInBasket(basketCopy),
+      basketCount: basketCopy.length
+    });
   }
 
   /**
@@ -109,10 +120,14 @@ class Store {
    * @param {Object} item 
    */
   deleteItemFromBasket(item) {
+    const newBasket = this.state.basket.filter(element => element.code !== item.code);
+
     this.setState({
       ...this.state,
-      basket: this.state.basket.filter(element => element.code !== item.code)
-    })
+      basket: newBasket,
+      basketSum: this.calcSumInBasket(newBasket),
+      basketCount: newBasket.length
+    });
   }
 }
 

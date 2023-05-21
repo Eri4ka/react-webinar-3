@@ -16,8 +16,7 @@ function Item({item, onClick, buttonTitle}){
     <div className={cn()}>
       <div className={cn('code')}>{item.code}</div>
       <div className={cn('title')}>{item.title}</div>
-      <div className={cn('field')}>{item.price} ₽</div>
-      {item.count && <div className={cn('field')}>{item.count} шт</div>}
+      <div className={cn('price')}>{item.price.toLocaleString('ru-RU') + ' ₽'}</div>
       <div className={cn('actions')}>
         <button onClick={callbacks.onClick}>
           {buttonTitle}
@@ -31,7 +30,7 @@ Item.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
-    selected: PropTypes.bool,
+    price: PropTypes.number,
     count: PropTypes.number
   }).isRequired,
   onClick: PropTypes.func,
@@ -39,8 +38,7 @@ Item.propTypes = {
 };
 
 Item.defaultProps = {
-  onDelete: () => {},
-  onAdd: () => {},
+  onClick: () => {},
 }
 
 export default React.memo(Item);
