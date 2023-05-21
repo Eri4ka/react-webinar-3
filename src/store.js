@@ -102,7 +102,7 @@ class Store {
     const index = this.state.basket.findIndex((element) => item.code === element.code);
 
     if (index !== -1) {
-      basketCopy[index].count++;
+      basketCopy[index].count += 1;
     } else {
       basketCopy = [...basketCopy, { ...item, count: 1 }];
     }
