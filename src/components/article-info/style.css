@@ -1,0 +1,19 @@
+.ArticleInfo {
+  padding: 20px;
+  color: #000000;
+  font-size: 18px;
+}
+
+.ArticleInfo-wrapper {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ArticleInfo-price {
+  display: flex;
+  column-gap: 15px;
+  font-weight: 700;
+  font-size: 24px;
+}

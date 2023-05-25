@@ -76,3 +76,11 @@ export const getPagesList = ({ maxLeftPagesCount, dots, currentPage, firstPage, 
   const rightPages = getArrayFromNum(pagesCount).slice(rightPagesStartsFrom - 1, pagesCount)
   return [firstPage, dots, ...rightPages] 
 };
+
+ /**
+  * Обрезает текст по заданному количеству символов
+  * @param {String} text 
+  * @param {Number} count 
+  * @returns {String}
+  */
+export const sliceText = (text, count) => text?.length > count ? text.slice(0, count + 1) + '...' : text;

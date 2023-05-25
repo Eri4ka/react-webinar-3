@@ -7,21 +7,25 @@ import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from '../../components/pagination';
+import { ITEMS_PER_PAGE } from '../../constants';
+import Loader from '../../components/loader';
 
 function Main() {
 
   const store = useStore();
 
-  useEffect(() => {
-    store.actions.catalog.load();
-  }, []);
-
   const select = useSelector(state => ({
     list: state.catalog.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
-    currentPage: state.catalog.currentPage
+    catalogCurrentPage: state.catalog.currentPage,
+    catalogListCount: state.catalog.count,
+    catalogLoadingStatus: state.catalog.loadingStatus
   }));
+
+  useEffect(() => {
+    store.actions.catalog.load();
+  }, [select.catalogCurrentPage]);
 
   const callbacks = {
     // Добавление в корзину
@@ -41,15 +45,23 @@ function Main() {
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                  sum={select.sum}/>
-      <List list={select.list} renderItem={renders.item}/>
-      <Pagination 
-        itemsTotal={100} 
-        itemsPerPage={10} 
-        currentPage={select.currentPage} 
-        onSelectPage={callbacks.setCurrentPage} 
+      <BasketTool 
+        onOpen={callbacks.openModalBasket} 
+        amount={select.amount}
+        sum={select.sum}
       />
+      {select.catalogLoadingStatus === 'idle' && (
+        <>
+          <List list={select.list} renderItem={renders.item}/>
+          <Pagination 
+            itemsTotal={select.catalogListCount - ITEMS_PER_PAGE} 
+            itemsPerPage={ITEMS_PER_PAGE} 
+            currentPage={select.catalogCurrentPage} 
+            onSelectPage={callbacks.setCurrentPage} 
+          />
+        </>
+      )}
+      {select.catalogLoadingStatus === 'loading' && <Loader />}
     </PageLayout>
 
   );
