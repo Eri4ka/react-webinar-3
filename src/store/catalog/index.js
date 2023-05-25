@@ -10,11 +10,23 @@ class Catalog extends StoreModule {
 
   initState() {
     return {
-      list: []
+      list: [],
+      currentPage: 1,
     }
   }
 
-  async load() {
+  /**
+   * Устанавливает текущую страницу каталога
+   * @param {Number} page 
+   */
+  setCurrentPage(page) {
+    this.setState({
+      ...this.getState(),
+      currentPage: page
+    })
+  }
+
+  async load(skip, limit) {
     const response = await fetch('/api/v1/articles');
     const json = await response.json();
     this.setState({

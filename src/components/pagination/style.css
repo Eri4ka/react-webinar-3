@@ -1,0 +1,13 @@
+.Pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.Pagination-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
