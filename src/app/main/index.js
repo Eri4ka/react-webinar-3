@@ -9,6 +9,8 @@ import useSelector from "../../store/use-selector";
 import Pagination from '../../components/pagination';
 import { ITEMS_PER_PAGE } from '../../constants';
 import Loader from '../../components/loader';
+import SubHeadLayout from '../../components/subhead-layout';
+import Navbar from '../../components/navbar';
 
 function Main() {
 
@@ -21,7 +23,8 @@ function Main() {
     catalogCurrentPage: state.catalog.currentPage,
     catalogListCount: state.catalog.count,
     catalogLoadingStatus: state.catalog.loadingStatus,
-    translation: state.localization.translations
+    translation: state.localization.translations,
+    currentLang: state.localization.currentLang,
   }));
 
   useEffect(() => {
@@ -41,18 +44,34 @@ function Main() {
 
   const renders = {
     item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket}/>
-    }, [callbacks.addToBasket]),
+      return <Item item={item} path={`articles/${item._id}`} onAdd={callbacks.addToBasket} translations={select.translation} />
+    }, [callbacks.addToBasket, select.translation]),
   };
+
+  const navList = [
+    {
+      title: select.translation['NavbarMain.title'],
+      path: '/'
+    }
+  ]
 
   return (
     <PageLayout>
-      <Head title={select.translation['MainHead.title']} onChangeLanguage={callbacks.setLanguage} />
-      <BasketTool 
-        onOpen={callbacks.openModalBasket} 
-        amount={select.amount}
-        sum={select.sum}
+      <Head 
+        title={select.translation['MainHead.title']} 
+        onChangeLanguage={callbacks.setLanguage}
+        currentLang={select.currentLang}
+        translations={select.translation}
       />
+      <SubHeadLayout>
+        <Navbar list={navList} />
+        <BasketTool 
+          onOpen={callbacks.openModalBasket} 
+          amount={select.amount}
+          sum={select.sum}
+          translations={select.translation}
+        />
+      </SubHeadLayout>
       {select.catalogLoadingStatus === 'idle' && (
         <>
           <List list={select.list} renderItem={renders.item}/>

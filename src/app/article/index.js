@@ -7,6 +7,8 @@ import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Loader from '../../components/loader';
 import ArticleInfo from '../../components/article-info';
+import SubHeadLayout from '../../components/subhead-layout';
+import Navbar from '../../components/navbar';
 
 function Article() {
   const { articleId } = useParams();
@@ -18,6 +20,8 @@ function Article() {
     articleLoadingStatus: state.article.loadingStatus,
     basketAmount: state.basket.amount,
     basketSum: state.basket.sum,
+    translation: state.localization.translations,
+    currentLang: state.localization.currentLang,
   }));
   
   useEffect(() => {
@@ -34,17 +38,33 @@ function Article() {
     setLanguage: useCallback((lang) => store.actions.localization.setLanguage(lang), [store])
   }
 
+  const navList = [
+    {
+      title: select.translation['NavbarMain.title'],
+      path: '/'
+    }
+  ]
+
   return (
     <PageLayout> 
       {select.articleLoadingStatus === 'idle' && (
         <>
-          <Head title={select.article?.title} onChangeLanguage={callbacks.setLanguage} />
-          <BasketTool 
-            onOpen={callbacks.openModalBasket} 
-            amount={select.basketAmount}
-            sum={select.basketSum}
+          <Head 
+            title={select.article?.title} 
+            onChangeLanguage={callbacks.setLanguage} 
+            currentLang={select.currentLang}
+            translations={select.translation} 
           />
-          <ArticleInfo article={select.article} onAdd={callbacks.addToBasket} />
+          <SubHeadLayout>
+            <Navbar list={navList} />
+            <BasketTool 
+              onOpen={callbacks.openModalBasket} 
+              amount={select.amount}
+              sum={select.sum}
+              translations={select.translation}
+            />
+          </SubHeadLayout>
+          <ArticleInfo article={select.article} onAdd={callbacks.addToBasket} translations={select.translation} />
         </>
       )}
       {select.articleLoadingStatus === 'loading' && <Loader />}

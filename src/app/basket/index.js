@@ -26,14 +26,14 @@ function Basket() {
 
   const renders = {
     itemBasket: useCallback((item) => {
-      return <ItemBasket item={item} onRemove={callbacks.removeFromBasket}/>
+      return <ItemBasket item={item} path={`articles/${item._id}`} onRemove={callbacks.removeFromBasket} translations={select.translation} />
     }, [callbacks.removeFromBasket]),
   };
   
   return (
-    <ModalLayout title={select.translation['ModalBucket.title']} onClose={callbacks.closeModal}>
+    <ModalLayout title={select.translation['ModalBucket.title']} onClose={callbacks.closeModal} translations={select.translation} >
       <List list={select.list} renderItem={renders.itemBasket}/>
-      <BasketTotal sum={select.sum}/>
+      <BasketTotal sum={select.sum} translations={select.translation} />
     </ModalLayout>
   );
 }

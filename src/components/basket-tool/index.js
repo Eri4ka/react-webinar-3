@@ -1,38 +1,29 @@
 import {memo} from "react";
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import {cn as bem} from '@bem-react/classname';
 import {numberFormat, plural} from "../../utils";
-import useSelector from "../../store/use-selector";
 import './style.css';
 
-function BasketTool({sum, amount, onOpen}) {
+function BasketTool({sum, amount, onOpen, translations}) {
   const cn = bem('BasketTool');
-
-  const select = useSelector(state => ({
-    translation: state.localization.translations
-  }));
 
   return (
     <div className={cn()}>
-      <Link to='/' className={cn('link')}>{select.translation['BasketTool.title']}</Link>
-      <div>
-        <span className={cn('label')}>{select.translation['BasketTool.label']}</span>
+        <span className={cn('label')}>{translations['BasketTool.label']}</span>
         <span className={cn('total')}>
           {amount
             ? `${amount} 
                ${plural(amount, 
                 {
-                  one: select.translation['PluralItem.one'], 
-                  few: select.translation['PluralItem.few'], 
-                  many: select.translation['PluralItem.many']
+                  one: translations['PluralItem.one'], 
+                  few: translations['PluralItem.few'], 
+                  many: translations['PluralItem.many']
                 }
-                )} / ${numberFormat(sum, select.translation['PriceLocale'])} ₽`
-            : `${select.translation['BasketTool.empty']}`
+                )} / ${numberFormat(sum, translations['PriceLocale'])} ₽`
+            : `${translations['BasketTool.empty']}`
           }
         </span>
-        <button onClick={onOpen}>{select.translation['BasketTool.button']}</button>
-      </div>
+        <button onClick={onOpen}>{translations['BasketTool.button']}</button>
     </div>
   );
 }
@@ -40,7 +31,8 @@ function BasketTool({sum, amount, onOpen}) {
 BasketTool.propTypes = {
   onOpen: PropTypes.func.isRequired,
   sum: PropTypes.number,
-  amount: PropTypes.number
+  amount: PropTypes.number,
+  translations: PropTypes.object
 };
 
 BasketTool.defaultProps = {

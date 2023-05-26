@@ -1,0 +1,15 @@
+.Navbar {
+  padding: 20px;
+}
+
+.Navbar-list {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.Navbar-link {
+  color: #0087E9;
+}
