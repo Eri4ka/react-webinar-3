@@ -4,6 +4,7 @@ import propTypes from 'prop-types';
 import {numberFormat} from "../../utils";
 import {cn as bem} from "@bem-react/classname";
 import PropTypes from "prop-types";
+import useSelector from "../../store/use-selector";
 import './style.css';
 
 function ItemBasket(props) {
@@ -14,6 +15,10 @@ function ItemBasket(props) {
     onRemove: (e) => props.onRemove(props.item._id)
   };
 
+  const select = useSelector(state => ({
+    translation: state.localization.translations
+  }));
+
   return (
     <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
@@ -23,9 +28,9 @@ function ItemBasket(props) {
         </Link>
       </div>
       <div className={cn('right')}>
-        <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
-        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
-        <div className={cn('cell')}><button onClick={callbacks.onRemove}>Удалить</button></div>
+        <div className={cn('cell')}>{numberFormat(props.item.price, select.translation['PriceLocale'])} ₽</div>
+        <div className={cn('cell')}>{numberFormat(props.item.amount || 0, select.translation['PriceLocale'])} {select.translation['Unit.pc']}</div>
+        <div className={cn('cell')}><button onClick={callbacks.onRemove}>{select.translation['Button.remove']}</button></div>
       </div>
     </div>
   )

@@ -1,0 +1,23 @@
+{
+  "Article.country": "Country:",
+  "Article.category": "Category:",
+  "Article.year": "Year:",
+  "Article.price": "Price:",
+  "Button.add": "Add",
+  "Button.remove": "Remove",
+  "Button.close": "Close",
+  "SelectLang.ru": "Ru",
+  "SelectLang.en": "Eng",
+  "MainHead.title": "Shop",
+  "ModalBucket.title": "Bucket",
+  "BasketTool.title": "Main",
+  "BasketTool.label": "In bucket:",
+  "BasketTool.empty": "empty",
+  "BasketTool.button": "Follow",
+  "BasketTotal.total": "Total",
+  "PluralItem.one": "item",
+  "PluralItem.few": "items",
+  "PluralItem.many": "items",
+  "PriceLocale": "en-US",
+  "Unit.pc": "pc"
+}

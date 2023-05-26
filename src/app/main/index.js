@@ -20,7 +20,8 @@ function Main() {
     sum: state.basket.sum,
     catalogCurrentPage: state.catalog.currentPage,
     catalogListCount: state.catalog.count,
-    catalogLoadingStatus: state.catalog.loadingStatus
+    catalogLoadingStatus: state.catalog.loadingStatus,
+    translation: state.localization.translations
   }));
 
   useEffect(() => {
@@ -33,7 +34,9 @@ function Main() {
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     // Установить текущую страницу каталога
-    setCurrentPage: useCallback((page) => store.actions.catalog.setCurrentPage(page), [store])
+    setCurrentPage: useCallback((page) => store.actions.catalog.setCurrentPage(page), [store]),
+    // Установить язык интерфейса
+    setLanguage: useCallback((lang) => store.actions.localization.setLanguage(lang), [store])
   }
 
   const renders = {
@@ -44,7 +47,7 @@ function Main() {
 
   return (
     <PageLayout>
-      <Head title='Магазин'/>
+      <Head title={select.translation['MainHead.title']} onChangeLanguage={callbacks.setLanguage} />
       <BasketTool 
         onOpen={callbacks.openModalBasket} 
         amount={select.amount}

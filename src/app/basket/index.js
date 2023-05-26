@@ -13,7 +13,8 @@ function Basket() {
   const select = useSelector(state => ({
     list: state.basket.list,
     amount: state.basket.amount,
-    sum: state.basket.sum
+    sum: state.basket.sum,
+    translation: state.localization.translations
   }));
 
   const callbacks = {
@@ -28,9 +29,9 @@ function Basket() {
       return <ItemBasket item={item} onRemove={callbacks.removeFromBasket}/>
     }, [callbacks.removeFromBasket]),
   };
-
+  
   return (
-    <ModalLayout title='Корзина' onClose={callbacks.closeModal}>
+    <ModalLayout title={select.translation['ModalBucket.title']} onClose={callbacks.closeModal}>
       <List list={select.list} renderItem={renders.itemBasket}/>
       <BasketTotal sum={select.sum}/>
     </ModalLayout>

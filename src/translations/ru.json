@@ -1,0 +1,23 @@
+{
+  "Article.country": "Страна производитель:",
+  "Article.category": "Категория:",
+  "Article.year": "Год выпуска:",
+  "Article.price": "Цена:",
+  "Button.add": "Добавить",
+  "Button.remove": "Удалить",
+  "Button.close": "Закрыть",
+  "SelectLang.ru": "Ру",
+  "SelectLang.en": "Англ",
+  "MainHead.title": "Магазин",
+  "ModalBucket.title": "Корзина",
+  "BasketTool.title": "Главная",
+  "BasketTool.label": "В корзине:",
+  "BasketTool.empty": "пусто",
+  "BasketTool.button": "Перейти",
+  "BasketTotal.total": "Итого",
+  "PluralItem.one": "товар",
+  "PluralItem.few": "товара",
+  "PluralItem.many": "товаров",
+  "PriceLocale": "ru-RU",
+  "Unit.pc": "шт"
+}

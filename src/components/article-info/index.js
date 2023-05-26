@@ -3,11 +3,16 @@ import PropTypes from "prop-types";
 import { cn as bem } from '@bem-react/classname';
 import { numberFormat, sliceText } from "../../utils";
 import { MAX_DESCRIPTION_LENGTH } from "../../constants";
+import useSelector from "../../store/use-selector";
 import './style.css';
 
 function ArticleInfo(props){
 
   const cn = bem('ArticleInfo');
+
+  const select = useSelector(state => ({
+    translation: state.localization.translations
+  }));
 
   const callbacks = {
     onAdd: () => props.onAdd(props.article._id)
@@ -24,23 +29,23 @@ function ArticleInfo(props){
           {slicedDecription}
         </div>
         <div className={cn('property')}>
-          Страна производитель:{' '}
+          {select.translation['Article.country']}{' '}
           <strong>{props.article?.madeIn?.title} ({props.article?.madeIn?.code})</strong>
         </div>
         <div className={cn('property')}>
-          Категория:{' '}
+          {select.translation['Article.category']}{' '}
           <strong>{props.article?.category?.title}</strong>
         </div>
         <div className={cn('property')}>
-          Год выпуска:{' '}
+          {select.translation['Article.year']}{' '}
           <strong>{props.article?.edition}</strong>
         </div>
         <div className={cn('price')}>
-          Цена:
-          <span>{numberFormat(props.article?.price)} ₽</span>
+          {select.translation['Article.price']}
+          <span>{numberFormat(props.article?.price, select.translation['PriceLocale'])} ₽</span>
         </div>
         <div className={cn('actions')}>
-          <button onClick={callbacks.onAdd}>Добавить</button>
+          <button onClick={callbacks.onAdd}>{select.translation['Button.add']}</button>
         </div>
       </div>
     </div>

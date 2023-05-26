@@ -30,13 +30,15 @@ function Article() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
+    // Установить язык интерфейса
+    setLanguage: useCallback((lang) => store.actions.localization.setLanguage(lang), [store])
   }
 
   return (
     <PageLayout> 
       {select.articleLoadingStatus === 'idle' && (
         <>
-          <Head title={select.article?.title} />
+          <Head title={select.article?.title} onChangeLanguage={callbacks.setLanguage} />
           <BasketTool 
             onOpen={callbacks.openModalBasket} 
             amount={select.basketAmount}
