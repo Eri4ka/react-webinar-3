@@ -1,4 +1,5 @@
 import StoreModule from "../module";
+import { getErrorMessage } from "../../utils";
 
 /**
  * Детальная ифнормация о товаре для страницы товара
@@ -8,7 +9,8 @@ class ArticleState extends StoreModule {
   initState() {
     return {
       data: {},
-      waiting: false // признак ожидания загрузки
+      waiting: false, // признак ожидания загрузки
+      errorMessage: '',
     }
   }
 
@@ -21,25 +23,30 @@ class ArticleState extends StoreModule {
     // Сброс текущего товара и установка признака ожидания загрузки
     this.setState({
       data: {},
-      waiting: true
+      waiting: true,
+      errorMessage: '',
     });
 
     try {
       const response = await fetch(`/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`);
       const json = await response.json();
 
+      if (!response.ok) {
+        throw json.error;
+      }
+
       // Товар загружен успешно
       this.setState({
         data: json.result,
-        waiting: false
+        waiting: false,
+        errorMessage: '',
       }, 'Загружен товар из АПИ');
 
     } catch (e) {
-      // Ошибка при загрузке
-      // @todo В стейт можно положить информацию об ошибке
       this.setState({
         data: {},
-        waiting: false
+        waiting: false,
+        errorMessage: getErrorMessage(e),
       });
     }
   }

@@ -6,11 +6,13 @@ import Navigation from "../../containers/navigation";
 import LocaleSelect from "../../containers/locale-select";
 import Header from '../../containers/header';
 import ProfileCard from '../../components/profile-card';
+import Spinner from "../../components/spinner";
 
 function Profile() {
 
   const select = useSelector(state => ({
     user: state.user.data,
+    waiting: state.user.waiting,
   }));
 
   const {t} = useTranslate();
@@ -39,7 +41,9 @@ function Profile() {
         <LocaleSelect/>
       </Head>
       <Navigation/>
-      <ProfileCard title={t('profile.title')} fieldsList={profileFields} />
+      <Spinner active={select.waiting}>
+        <ProfileCard title={t('profile.title')} fieldsList={profileFields} />
+      </Spinner>
     </PageLayout>
   );
 }
