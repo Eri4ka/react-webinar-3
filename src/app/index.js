@@ -1,9 +1,13 @@
-import {useCallback, useContext, useEffect, useState} from 'react';
 import {Routes, Route} from 'react-router-dom';
+import useStore from '../hooks/use-store';
 import useSelector from "../hooks/use-selector";
+import useInit from "../hooks/use-init";
 import Main from "./main";
 import Basket from "./basket";
 import Article from "./article";
+import Login from './login';
+import Profile from './profile';
+import ProtectedRoute from '../components/protected-route';
 
 /**
  * Приложение
@@ -11,16 +15,30 @@ import Article from "./article";
  */
 function App() {
 
-  const activeModal = useSelector(state => state.modals.name);
+  const store = useStore();
+
+  const select = useSelector(state => ({
+    activeModal: state.modals.name,
+    user: state.user.data
+  }));
+
+  useInit(() => {
+    store.actions.user.getUser();
+  }, []);
 
   return (
     <>
       <Routes>
         <Route path={''} element={<Main/>}/>
         <Route path={'/articles/:id'} element={<Article/>}/>
+        <Route path={'/login'} element={<Login/>}/>
+        <Route path={'/profile'} element={
+          <ProtectedRoute isAuth={Object.keys(select.user).length !== 0}>
+            <Profile />
+          </ProtectedRoute>
+        } />
       </Routes>
-
-      {activeModal === 'basket' && <Basket/>}
+      {select.activeModal === 'basket' && <Basket/>}
     </>
   );
 }

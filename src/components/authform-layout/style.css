@@ -1,0 +1,18 @@
+.AuthFormLayout {
+  padding: 20px;
+}
+
+.AuthFormLayout-title {
+  margin: 20px 0;
+}
+
+.AuthFormLayout-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.AuthFormLayout-error {
+  color: #FF0000;
+} 

@@ -23,7 +23,7 @@ class CategoryState extends StoreModule {
    */
   async getCategories() {
     this.setState({
-      ...this.getState(),
+      data: [{value: 'all', title: 'Все'}],
       waiting: true
     });
 

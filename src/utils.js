@@ -76,10 +76,9 @@ const transformDataFromTree = (data, position = 0) => {
     if (item.nested) {
       transformedData.push(...transformDataFromTree(item.nested, position + 1))
     }
-    
   })
 
-  return transformedData
+  return transformedData;
 }
 
 /**
@@ -89,4 +88,47 @@ const transformDataFromTree = (data, position = 0) => {
  */
 export const getCorrectCategoryData = (data) => {
   return transformDataFromTree(getCategoryTreeFromData(data))
+}
+
+/**
+ * Обрабатывет ошибку от сервера
+ * @param {Object} error 
+ * @returns {String}
+ */
+export const getErrorMessage = (error) => {   
+  if (error.data) {
+    return error.data.issues[0].message
+  }
+  if (error.code && error.message) {
+    return error.message
+  }
+  return 'Uncaught error. Try again'
+}
+
+/**
+ * Возвращает необходимо поле из localstorage
+ * @param {String} key 
+ * @param {String|Array|Object} defaulValue 
+ * @returns {String|Array|Object}
+ */
+export const getFieldFromLS = (key, defaulValue) => {
+  const field = localStorage.getItem(key);
+  return field ? JSON.parse(field) : defaulValue;
+}
+
+/**
+ * Записывает поле в localstorage
+ * @param {String} key 
+ * @param {String|Array|Object} value
+ */
+export const addFieldToLS = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+/**
+ * Удаляет поле из localstorage
+ * @param {String} key 
+ */
+export const removeFieldFromLS = (key) => {
+  localStorage.removeItem(key)
 }
