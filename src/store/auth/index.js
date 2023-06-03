@@ -5,12 +5,14 @@ import { addFieldToLS, removeFieldFromLS, getFieldFromLS } from "../../utils";
 /**
  * Информация о текущем пользователе
  */
-class UserState extends StoreModule {
+class AuthState extends StoreModule {
   _tokenKey = 'token';
+  _autorizedKey = 'authorized';
 
   initState() {
     return {
-      data: {},
+      authorized: getFieldFromLS(this._autorizedKey, '') || false,
+      userName: '',
       waiting: false,
       errorMessage: '',
     }
@@ -23,8 +25,9 @@ class UserState extends StoreModule {
    */
   async login(body) {
     this.setState({
-      data: {},
+      authorized: false,
       waiting: true,
+      userName: '',
       errorMessage: '',
     });
 
@@ -45,11 +48,13 @@ class UserState extends StoreModule {
 
       this.setState({
         ...this.getState(),
-        data: json.result.user,
+        authorized: true,
+        userName: json.result.user.profile.name,
         waiting: false
       }, 'Пользователь авторизован');
 
       addFieldToLS(this._tokenKey, json.result.token);
+      addFieldToLS(this._autorizedKey, true);
 
     } catch (e) {
       this.setState({
@@ -72,14 +77,15 @@ class UserState extends StoreModule {
       method: 'DELETE'
     });
 
+    removeFieldFromLS(this._tokenKey);
+    removeFieldFromLS(this._autorizedKey);
+
     this.setState({
       ...this.initState()
     }, 'Пользователь разлогинен');
-
-    removeFieldFromLS(this._tokenKey);
   }
 
-  async getUser() {
+  async checkAuth() {
     if (!getFieldFromLS(this._tokenKey, '')) {
       return;
     };
@@ -98,16 +104,17 @@ class UserState extends StoreModule {
       });
 
       const json = await response.json();
-
+      
       if (!response.ok) {
         throw json.error;
       }
 
       this.setState({
         ...this.getState(),
-        data: json.result,
+        authorized: true,
+        userName: json.result.profile.name,
         waiting: false
-      }, 'Пользователь загружен');
+      }, 'Пользователь авторизован');
 
     } catch (e) {
       this.setState({
@@ -117,6 +124,16 @@ class UserState extends StoreModule {
       });
     }
   }
+
+  /**
+   * Сброс текста ошибки
+   */
+  resetErrorText() {
+    this.setState({
+      ...this.getState(),
+      errorMessage: ''
+    });
+  }
 }
 
-export default UserState;
+export default AuthState;

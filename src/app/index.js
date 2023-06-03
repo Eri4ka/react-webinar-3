@@ -19,11 +19,11 @@ function App() {
 
   const select = useSelector(state => ({
     activeModal: state.modals.name,
-    user: state.user.data
+    isAuthorized: state.auth.authorized,
   }));
 
   useInit(() => {
-    store.actions.user.getUser();
+    store.actions.auth.checkAuth();
   }, []);
 
   return (
@@ -33,7 +33,7 @@ function App() {
         <Route path={'/articles/:id'} element={<Article/>}/>
         <Route path={'/login'} element={<Login/>}/>
         <Route path={'/profile'} element={
-          <ProtectedRoute isAuth={Object.keys(select.user).length !== 0}>
+          <ProtectedRoute isAuth={select.isAuthorized}>
             <Profile />
           </ProtectedRoute>
         } />

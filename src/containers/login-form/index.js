@@ -6,6 +6,7 @@ import Input from "../../components/input";
 import { useNavigate } from "react-router-dom";
 import AuthFormLayout from "../../components/authform-layout";
 import InputLabel from "../../components/input-label";
+import useInit from "../../hooks/use-init";
 
 function LoginForm() {
   const [login, setLogin] = useState('');
@@ -15,9 +16,9 @@ function LoginForm() {
   const store = useStore();
 
   const select = useSelector(state => ({
-    user: state.user.data,
-    errorMessage: state.user.errorMessage,
-    waiting: state.user.waiting,
+    isAuthorized: state.auth.authorized,
+    errorMessage: state.auth.errorMessage,
+    waiting: state.auth.waiting,
   }));
 
   const isDisabledForm = !login || !password || select.waiting;
@@ -30,15 +31,21 @@ function LoginForm() {
     // Вызов формы
     onSubmitForm: useCallback(event => {
       event.preventDefault();
-      store.actions.user.login({ login, password });
-    })
+      store.actions.auth.login({ login, password });
+    }),
+    // Сброс состоянии авторизации
+    onResetErrorText: useCallback(() => store.actions.auth.resetErrorText(), [store]),
   };
 
   useEffect(() => {
-    if (Object.keys(select.user).length !== 0) {
+    if (select.isAuthorized) {
       navigate(-1);
     }
-  }, [select.user])
+  }, [select.isAuthorized]);
+
+  useInit(() => {
+    callbacks.onResetErrorText()
+  }, [])
 
   const {t} = useTranslate();
 

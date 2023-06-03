@@ -7,13 +7,21 @@ import LocaleSelect from "../../containers/locale-select";
 import Header from '../../containers/header';
 import ProfileCard from '../../components/profile-card';
 import Spinner from "../../components/spinner";
+import useStore from "../../hooks/use-store";
+import useInit from "../../hooks/use-init";
 
 function Profile() {
 
+  const store = useStore();
+
   const select = useSelector(state => ({
-    user: state.user.data,
-    waiting: state.user.waiting,
+    user: state.profile.data,
+    waiting: state.profile.waiting,
   }));
+
+  useInit(() => {
+    store.actions.profile.getProfileData();
+  }, []);
 
   const {t} = useTranslate();
 
@@ -21,20 +29,20 @@ function Profile() {
     {
       id: 1,
       label: t('profile.firstName'),
-      value: select.user.profile.name || ''
+      value: select.user?.profile?.name || ''
     },
     {
       id: 2,
       label: t('profile.phone'),
-      value: select.user.profile.phone || ''
+      value: select.user?.profile?.phone || ''
     },
     {
       id: 3,
       label: 'e-mail',
-      value: select.user.email || ''
+      value: select.user?.email || ''
     }
   ]
-
+  
   return (
     <PageLayout head={<Header/>}>
       <Head title={t('title')}>

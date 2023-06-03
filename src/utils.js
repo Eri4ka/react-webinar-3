@@ -70,7 +70,7 @@ const transformDataFromTree = (data, position = 0) => {
   const transformedData = [];
 
   data.forEach((item) => {
-    const eachCategory = {value: item._id, title: position ? `${'-'.repeat(position)} ${item.title}` : item.title}
+    const eachCategory = {value: item._id, title: `${'- '.repeat(position)}${item.title}`}
     transformedData.push(eachCategory)
 
     if (item.nested) {
