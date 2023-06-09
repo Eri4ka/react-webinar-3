@@ -19,6 +19,10 @@
   margin-right: 10px;
 }
 
+.ItemComment-user_active {
+  color: #666666;
+}
+
 .ItemComment-date {
   color: #666666;
 }
@@ -29,7 +33,7 @@
 }
 
 .ItemComment-content_deleted {
-  opacity: 0.5;
+  color: #666666;
 }
 
 .ItemComment-reply {

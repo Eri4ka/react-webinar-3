@@ -15,7 +15,10 @@ function Comments() {
   const params = useParams();
   const dispatch = useDispatch();
 
-  const isAutorized = useSelector(state => state.session.exists);
+  const storeSelect = useSelector(state => ({
+    isAutorized: state.session.exists,
+    activeUserId: state.session.user._id
+  }));
 
   const select = useSelectorRedux(state => ({
     comments: state.comments.data,
@@ -34,7 +37,7 @@ function Comments() {
       listToTree(select.comments)
     ), [select.comments])
   };
-
+ 
   const {t} = useTranslate();
 
   const translations = {
@@ -85,8 +88,9 @@ function Comments() {
               replyText={translations.commentItemReply}
               deletedCommentText={translations.commentItemDeleted}
               onReplyClick={callbacks.onSetActiveParentId}
+              isActiveUser={storeSelect.activeUserId === comment.author._id}
               replyForm={<ProtectedComment
-                isAutorized={isAutorized}
+                isAutorized={storeSelect.isAutorized}
                 activeParentId={select.activeParentId}
                 parentId={comment._id}
                 formLabelText={translations.formLabel}
@@ -110,8 +114,9 @@ function Comments() {
           replyText={translations.commentItemReply}
           deletedCommentText={translations.commentItemDeleted}
           onReplyClick={callbacks.onSetActiveParentId}
+          isActiveUser={storeSelect.activeUserId === comment.author._id}
           replyForm={<ProtectedComment
-            isAutorized={isAutorized}
+            isAutorized={storeSelect.isAutorized}
             activeParentId={select.activeParentId}
             parentId={comment._id}
             formLabelText={translations.formLabel}
@@ -133,7 +138,7 @@ function Comments() {
       <CommentsLayout title={translations.commentsTitle} total={select.countComments}>
         {buildTreeOfCommentComponents(options.comments)}
         <ProtectedComment
-          isAutorized={isAutorized}
+          isAutorized={storeSelect.isAutorized}
           activeParentId={select.activeParentId}
           parentId={params.id}
           formLabelText={translations.formLabel}

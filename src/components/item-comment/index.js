@@ -16,7 +16,7 @@ function ItemComment(props) {
     <div className={cn()}>
       <div className={cn('wrapper')}>
         <div className={cn('heading')}>
-          <span className={cn('user')}>{props.comment.author.profile.name}</span>
+          <span className={cn('user', { active: props.isActiveUser })}>{props.comment.author.profile.name}</span>
           <span className={cn('date')}>{transformDate(props.comment.dateCreate)}</span>
         </div>
         <div className={cn('content', { deleted: props.comment.isDeleted })}>
@@ -46,13 +46,15 @@ ItemComment.propTypes = {
   onReplyClick: PropTypes.func,
   replyForm: PropTypes.node,
   deletedCommentText: PropTypes.string,
-  replyText: PropTypes.string
+  replyText: PropTypes.string,
+  isActiveUser: PropTypes.bool
 }
 
 ItemComment.defaultProps = {
   onReplyClick: () => {},
   deletedCommentText: 'Комментарий удален',
-  replyText: 'Ответить'
+  replyText: 'Ответить',
+  isActiveUser: false
 }
 
 export default ItemComment;
