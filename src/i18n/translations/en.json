@@ -20,5 +20,20 @@
   "auth.password": "Password",
   "auth.signIn": "Sign in",
   "session.signIn": "Sign In",
-  "session.signOut": "Sign Out"
+  "session.signOut": "Sign Out",
+  "comments.title": "Comments",
+  "commentsNotice.link": "Sign in",
+  "commentsNotice.cancel": "Cancel",
+  "commentsNotice.additionalText": {
+    "article": "to have write a comment.",
+    "comment": "to have reply a comment."
+  },
+  "commentsForm.label": {
+    "article": "New comment",
+    "comment": "New reply"
+  },
+  "commentsForm.send": "Send",
+  "commentsForm.cancel": "Cancel",
+  "commentItem.reply": "Reply",
+  "commentItem.deleted": "Comment has been deleted"
 }

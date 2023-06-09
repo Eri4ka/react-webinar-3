@@ -1,0 +1,10 @@
+.CommentsLayout {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  padding: 20px 40px;
+}
+
+.CommentsLayout-title {
+  font-size: 24px;
+}

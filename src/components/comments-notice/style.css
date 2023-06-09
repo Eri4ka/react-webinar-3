@@ -1,0 +1,9 @@
+.CommentsNotice {
+
+}
+
+.CommentsNotice-cancel {
+  text-decoration: underline;
+  color: #666666;
+  cursor: pointer;
+}
