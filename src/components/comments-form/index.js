@@ -8,6 +8,8 @@ function CommentsForm(props) {
 
   const [commentData, setCommentData] = useState('');
 
+  const isDisabled = commentData.trim().length === 0;
+
   const callbacks = {
     onChange: (event) => {
       setCommentData(event.target.value);
@@ -20,11 +22,11 @@ function CommentsForm(props) {
   };
 
   return (
-    <form className={cn()} onSubmit={callbacks.onSubmit}>
+    <form className={cn()} onSubmit={callbacks.onSubmit} ref={props.innerRef}>
       <label className={cn('label')} htmlFor="comment">{props.labelText[props['type']]}</label>
       <textarea name="comment" className={cn('area')} value={commentData} onChange={callbacks.onChange}></textarea>
       <div>
-        <button className={cn('button')} type="submit" disabled={!commentData}>{props.sendText}</button>
+        <button className={cn('button')} type="submit" disabled={isDisabled}>{props.sendText}</button>
         {props.type === 'comment' && (
           <button 
             className={cn('button')} 

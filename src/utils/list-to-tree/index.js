@@ -4,7 +4,7 @@
  * @param [key] {String} Свойство с первичным ключом
  * @returns {Array} Корневые узлы
  */
-export default function listToTree(list, key = '_id') {
+export default function listToTree({ list, key = '_id', type = 'comment' }) {
   let trees = {};
   let roots = {};
 
@@ -20,7 +20,7 @@ export default function listToTree(list, key = '_id') {
     }
 
     // Если элемент имеет родителя, то добавляем его в подчиненные родителя
-    const hasParent = item.parent?._type ? item.parent?._type === 'comment' : item.parent?._id;
+    const hasParent = item.parent?._type ? item.parent?._type === type : item.parent?._id;
 
     if (hasParent) {
       // Если родителя ещё нет в индексе, то индекс создаётся, ведь _id родителя известен

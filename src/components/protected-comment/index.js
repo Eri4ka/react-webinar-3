@@ -1,9 +1,21 @@
-import { memo } from "react";
+import { memo, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import CommentsNotice from "../../components/comments-notice";
 import CommentsForm from "../../components/comments-form";
 
 function ProtectedComment(props) {
+  const elementRef = useRef();
+  const location = useLocation();
+
+  const noticeLinkPath = { to: '/login', state: { back: location.pathname} }
+
+  useEffect(() => {
+    if (props.type === 'article') {
+      return
+    }
+    elementRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, []);
 
   if (props.activeParentId !== props.parentId) {
     return null;
@@ -11,7 +23,8 @@ function ProtectedComment(props) {
 
   if (props.isAutorized) {
     return (
-      <CommentsForm 
+      <CommentsForm
+        innerRef={elementRef}
         labelText={props.formLabelText} 
         sendText={props.formSendText}
         cancelText={props.formCancelText}
@@ -24,8 +37,9 @@ function ProtectedComment(props) {
   }
   
   return (
-    <CommentsNotice 
-      link='/login' 
+    <CommentsNotice
+      innerRef={elementRef}
+      link={noticeLinkPath}
       linkText={props.noticeLinkText} 
       additionalText={props.noticeAdditionalText}
       cancelText={props.noticeCancelText}

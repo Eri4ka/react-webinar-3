@@ -7,8 +7,8 @@ function CommentsNotice(props) {
   const cn = bem('CommentsNotice');
 
   return (
-    <div className={cn()}>
-      <Link to={props.link}>{props.linkText}</Link>
+    <div className={cn()} ref={props.innerRef}>
+      <Link {...props.link}>{props.linkText}</Link>
       , {props.additionalText[props['type']]}{' '}
       {props.type === 'comment' && 
         <span className={cn('cancel')} onClick={props.onResetActiveType}>{props.cancelText}</span>
@@ -22,7 +22,7 @@ CommentsNotice.propTypes = {
     comment: PropTypes.string,
     article: PropTypes.string
   }).isRequired,
-  link: PropTypes.string.isRequired,
+  link: PropTypes.object.isRequired,
   additionalText: PropTypes.shape({
     comment: PropTypes.string,
     article: PropTypes.string

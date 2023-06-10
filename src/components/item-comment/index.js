@@ -24,8 +24,8 @@ function ItemComment(props) {
         </div>
         <div className={cn('reply')} onClick={callbacks.onReply}>{props.replyText}</div>
       </div>
-      {props.replyForm}
       {props.children.length > 0 && <div className={cn('nested')}>{props.children}</div>}
+      {props.isReplyFormActive && <div className={cn('form')}>{props.replyForm}</div>}
     </div>
   )
 }

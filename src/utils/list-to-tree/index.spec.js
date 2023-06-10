@@ -15,7 +15,7 @@ describe('listToTree', () => {
       {_id: 5, title: 'Аксессуары', parent: {_id: 3}},
     ]
 
-    expect(listToTree(list)).toEqual([
+    expect(listToTree({list})).toEqual([
       {
         _id: 2, title: "Электроника", parent: null, children: [
           {
@@ -53,7 +53,7 @@ describe('listToTree', () => {
       {_id: 12, title: 'Сюрприз =)', parent: {_id: 11}},
     ]
 
-    expect(listToTree(list)).toEqual([
+    expect(listToTree({list})).toEqual([
       {
         _id: 2, title: "Электроника", parent: null, children: [
           {

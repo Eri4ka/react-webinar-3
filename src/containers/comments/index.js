@@ -34,10 +34,10 @@ function Comments() {
 
   const options = {
     comments: useMemo(() => (
-      listToTree(select.comments)
+      listToTree({ list:select.comments, type: 'comment' })
     ), [select.comments])
   };
- 
+
   const {t} = useTranslate();
 
   const translations = {
@@ -89,6 +89,7 @@ function Comments() {
               deletedCommentText={translations.commentItemDeleted}
               onReplyClick={callbacks.onSetActiveParentId}
               isActiveUser={storeSelect.activeUserId === comment.author._id}
+              isReplyFormActive={select.activeParentId === comment._id}
               replyForm={<ProtectedComment
                 isAutorized={storeSelect.isAutorized}
                 activeParentId={select.activeParentId}
@@ -115,6 +116,7 @@ function Comments() {
           deletedCommentText={translations.commentItemDeleted}
           onReplyClick={callbacks.onSetActiveParentId}
           isActiveUser={storeSelect.activeUserId === comment.author._id}
+          isReplyFormActive={select.activeParentId !== comment._id}
           replyForm={<ProtectedComment
             isAutorized={storeSelect.isAutorized}
             activeParentId={select.activeParentId}
