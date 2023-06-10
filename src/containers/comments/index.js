@@ -78,12 +78,13 @@ function Comments() {
    * @param {Array} data 
    * @returns {Node}
    */
-  const buildTreeOfCommentComponents = (data) => {
+  const buildTreeOfCommentComponents = (data, nesting = 0) => {
     return data.map((comment) => {
         if (comment.children) {
           return (
             <ItemComment 
-              key={comment._id} 
+              key={comment._id}
+              nesting={nesting} 
               comment={comment} 
               replyText={translations.commentItemReply}
               deletedCommentText={translations.commentItemDeleted}
@@ -104,13 +105,14 @@ function Comments() {
                 noticeAdditionalText={translations.noticeAdditional}
                 noticeCancelText={translations.noticeCancel}
               />}>
-              {buildTreeOfCommentComponents(comment.children)}
+              {buildTreeOfCommentComponents(comment.children, nesting + 1)}
             </ItemComment>
           );
         }
        return (
         <ItemComment 
-          key={comment._id} 
+          key={comment._id}
+          nesting={nesting}
           comment={comment}
           replyText={translations.commentItemReply}
           deletedCommentText={translations.commentItemDeleted}

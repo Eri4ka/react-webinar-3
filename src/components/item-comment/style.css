@@ -49,6 +49,14 @@
   padding-left: 30px;
 }
 
+.ItemComment-nested_limited {
+  padding-left: 0;
+}
+
 .ItemComment-form {
   padding-left: 30px;
+}
+
+.ItemComment-form_limited {
+  padding-left: 0;
 }

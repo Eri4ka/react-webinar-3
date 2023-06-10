@@ -6,6 +6,8 @@ import './style.css';
 function ItemComment(props) {
   const cn = bem('ItemComment');
 
+  const isLimited = props.nesting > 20;
+
   const callbacks = {
     onReply: () => {
       props.onReplyClick(props.comment._id);
@@ -24,8 +26,8 @@ function ItemComment(props) {
         </div>
         <div className={cn('reply')} onClick={callbacks.onReply}>{props.replyText}</div>
       </div>
-      {props.children.length > 0 && <div className={cn('nested')}>{props.children}</div>}
-      {props.isReplyFormActive && <div className={cn('form')}>{props.replyForm}</div>}
+      {props.children.length > 0 && <div className={cn('nested', { limited: isLimited })}>{props.children}</div>}
+      {props.isReplyFormActive && <div className={cn('form', { limited: isLimited })}>{props.replyForm}</div>}
     </div>
   )
 }
