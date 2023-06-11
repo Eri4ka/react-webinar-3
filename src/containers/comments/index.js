@@ -39,7 +39,7 @@ function Comments() {
   };
 
   const {t} = useTranslate();
-
+  
   const translations = {
     formLabel: t('commentsForm.label'),
     formSend: t('commentsForm.send'),

@@ -18,6 +18,6 @@ export default function translate(lang, text, plural) {
       result = result[key];
     }
   }
-
+  
   return result;
 }
